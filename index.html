@@ -97,10 +97,10 @@ let totO=0,totN=0;
 $('yr').textContent=new Date().getFullYear();
 const fmt=b=>b>=1048576?(b/1048576).toFixed(2)+' MB':Math.round(b/1024)+' KB';
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-inp.onchange=()=>{handle(inp.files);inp.value=''};
+inp.onchange=()=>{const fl=Array.from(inp.files);inp.value='';handle(fl)};
 ['dragover','dragenter'].forEach(e=>drop.addEventListener(e,v=>{v.preventDefault();drop.classList.add('on')}));
 ['dragleave','drop'].forEach(e=>drop.addEventListener(e,v=>{v.preventDefault();drop.classList.remove('on')}));
-drop.addEventListener('drop',v=>handle(v.dataTransfer.files));
+drop.addEventListener('drop',v=>handle(Array.from(v.dataTransfer.files)));
 $('chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;$('kb').value=b.dataset.v;sync()};
 function sync(){document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.dataset.v===$('kb').value))}
 $('kb').oninput=sync;
